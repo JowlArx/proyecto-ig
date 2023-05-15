@@ -1,132 +1,92 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, Button, Alert, TouchableOpacity, Platform, } from 'react-native';
-import Nashe from './assets/nashe.png';
-import * as ImagePicker from 'expo-image-picker';
-import * as Sharing from 'expo-sharing';
-import uploadAnonymousFilesAsync from "anonymous-files";
+//inicio libreria
+import React from 'react';
+import { StyleSheet, ScrollView, View, Text, Image } from 'react-native';
+import { Card } from 'react-native-elements';
+//fin libreria
 
-const App = () => {
-
-
-  const [SelectedImg, SetSelectedImg] = useState(null)
-
-  const openShareDialog = async () => {
-    if (!(await Sharing.isAvailableAsync())) {
-      alert("No podes compartir en esta plataforma");
-      return;
-    }
-
-    await Sharing.shareAsync(SelectedImg.localUri);
-
-  }
-
-  let OpenImagePicker = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync()
-    if (permissionResult.granted === false) {
-      alert('necesitamos permisos para acceder a la galeria');
-      return;
-    }
-    const PickerResult = await ImagePicker.launchImageLibraryAsync()
-    console.log(PickerResult)
-    if (PickerResult.canceled === true) {
-      return;
-    }
-
-
-    if (Platform.OS === "web") {
-      let remoteUri = await uploadAnonymousFilesAsync(PickerResult.uri);
-      setSelectedImage({ localUri: PickerResult.uri, remoteUri });
-    } else {
-      setSelectedImage({ localUri: PickerResult.uri });
-    }
-  }
+// start feed
+function Feed() {
   return (
-    <View style={styles.ViewHello}>
-      <Text>Hello World</Text>
-      <Image
-        source={Nashe}
-        style={styles.Image}
-      />
-      <TouchableOpacity onPress={OpenImagePicker}>
-        <Image
-          source={{
-            uri: SelectedImg !== null
-              ? SelectedImg.localUri
-              : "https://picsum.photos/200/2020",
-          }}
-          style={styles.Imagenashe}
-        />
-      </TouchableOpacity>
-
-      <Button
-        color="black"
-        title="botonaso"
-        onPress={() => console.log('Helow')}
-      />
-      <Text>separao por botonaso</Text>
-      <Button
-        color="black"
-        title="botonaso con alerta"
-        onPress={() => Alert.alert('Helow')}
-      />
-      <Text>separao por botonasoide</Text>
-
-      <TouchableOpacity onPress={() => Alert.alert('Holaaaa')} style={styles.Botonasoide}>
-        <Text style={styles.Botonasoidetxt}>botonasoide</Text>
-      </TouchableOpacity>
-      <Text>Otro botonaso</Text>
-
-      {
-        SelectedImg ? (
-          <TouchableOpacity onPress={openShareDialog} style={styles.Botonasoideimg}>
-            <Text style={styles.Botonasoidetxt}>botonaso pero pa compartir</Text>
-          </TouchableOpacity>
-          ) : (
-          <View />
-      )}
-
-    </View>
+    <ScrollView>
+      <Card>
+        <View style={styles.flexcards}>
+        <Image source={require('./assets/momo.png')} style={styles.imgperfeed}/>
+          <Text style={styles.txtfeed}>GeroMomo</Text>
+        </View>
+        <Card.Divider style={{ padding: 2 }}/>
+          <View style={styles.postContent}>
+            <Image source={{uri: 'https://i.pinimg.com/564x/b8/99/45/b899452fc5c36e0d2fb1cc1fe780ecc2.jpg'}} style={styles.postImage} />
+            <Text style={styles.postDescription}>Una imagen de pinteres</Text>
+          </View>
+      </Card>
+      <Card>
+        <View style={styles.flexcards}>
+        <Image source={require('./assets/momo.png')} style={styles.imgperfeed}/>
+          <Text style={styles.txtfeed}>GeroMomo</Text>
+        </View>
+        <Card.Divider style={{ padding: 2 }}/>
+          <View style={styles.postContent}>
+            <Image source={{uri: 'https://i.pinimg.com/564x/ae/87/97/ae879770271177c32ea326a6183ffc0c.jpg'}} style={styles.postImage} />
+            <Text style={styles.postDescription}>Messi mi dios todo poderoso antinflacionario</Text>
+          </View>
+      </Card>
+      <Card>
+        <View style={styles.flexcards}>
+        <Image source={require('./assets/momo.png')} style={styles.imgperfeed}/>
+          <Text style={styles.txtfeed}>GeroMomo</Text>
+        </View>
+        <Card.Divider style={{ padding: 2 }}/>
+          <View style={styles.postContent}>
+            <Image source={{uri: 'https://i.pinimg.com/564x/20/59/27/2059274d6e757699c3be921bb99c99b3.jpg'}} style={styles.postImage} />
+            <Text style={styles.postDescription}>gengar, gastly y hunter o como se escriba no se</Text>
+          </View>
+      </Card>
+    </ScrollView>
   );
-};
+}
+//end feed
 
+//start feed styles
 const styles = StyleSheet.create({
-  ViewHello: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#757575"
+  txtfeed: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+    alignItems: 'center',
+    padding: 7,
   },
-  Image: {
-    width: 200,
-    height: 200,
+  flexcards: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'row',
+      textAlign: 'center',
+      alignContent: 'center',
+    },
+  postContent: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 16,
   },
-  Imagenashe: {
-    width: 300,
-    height: 300,
-    borderRadius: 100,
-
+  postImage: {
+    alignContent: 'center',
+    width: '100%',
+    height: 410,
   },
-  Botonasoide: {
-    width: 110,
-    height: 30,
-    alignItems: "center",
-    backgroundColor: "black",
-    borderRadius: 15,
+  postDescription: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+    alignItems: 'center',
+    padding: 7,
   },
-  Botonasoidetxt: {
-    flex: 1,
-    fontStyle: "italic",
-    textAlign: "center",
-    fontSize: 17,
-    color: "white"
-  },
-  Botonasoideimg: {
-    width: 230,
-    height: 30,
-    alignItems: "center",
-    backgroundColor: "black",
-    borderRadius: 15,
-  },
+  imgperfeed: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+    },
 });
+//end feed styles
 
-export default App;
+//export
+export default Feed;
+//end export
