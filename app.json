@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Project-Insta",
-    "slug": "Project-Insta",
+    "name": "app-inta",
+    "slug": "app-inta",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
