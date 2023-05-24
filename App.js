@@ -1,4 +1,5 @@
 import Header from "./Header";
+import Stories from './Stories';
 import Feed from './Feed'
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Bottom from "./Bottom";
@@ -6,8 +7,8 @@ import Bottom from "./Bottom";
 const App = () => {
   return (
     <SafeAreaView style={styles.fondo}>
-      <Stories />
       <Header />
+      <Stories />
       <Feed></Feed>
       <Bottom/>
       
