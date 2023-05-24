@@ -6,6 +6,7 @@ import Bottom from "./Bottom";
 const App = () => {
   return (
     <SafeAreaView style={styles.fondo}>
+      <Stories />
       <Header />
       <Feed></Feed>
       <Bottom/>
